@@ -37,7 +37,20 @@ var styles = StyleSheet.create({
     headerText: {
         fontSize: 20,
         fontWeight: '600',
-        letterSpacing: -0.41
+        letterSpacing: -0.41,
+        lineHeight: 22,
+    },
+    captionText: {
+        fontSize: 13,
+        fontWeight: '500',
+        letterSpacing: 0.07,
+        opacity: .6,
+        color: '#17283D'
+    },
+    bodyText: {
+        fontSize: 17,
+        fontWeight: '400',
+        lineHeight: 22,
     },
     pillText: {
         fontSize: 14,

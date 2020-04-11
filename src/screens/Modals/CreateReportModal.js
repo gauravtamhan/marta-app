@@ -8,27 +8,7 @@ import styles from '@assets/styles';
 import Divider from '@components/Divider';
 import Button from '@components/Button';
 import { THEME_COLOR } from '@assets/colors';
-
-const quickReports = [
-    'Vandalism/Graffiti',
-    'Light Issue',
-    'Sign Outtage',
-    'Train Delayed/Stopped',
-    'Nuisance Behavior',
-];
-
-const otherReports = [
-    'Assualt or fighting',
-    'Gun / knife / shooting',
-    'Human Trafficking',
-    'Medical emergency',
-    'Panhandle/Homeless',
-    'Person needs assistance',
-    'Sanitary issue',
-    'Suspicious Activity',
-    'Unattended bag or package',
-    'Other issue',
-]
+import { quickIncidentCategories, otherIncidentCategories } from '@shared/consts';
 
 export default class CreateReportModal extends Component {
     constructor(props) {
@@ -75,7 +55,7 @@ export default class CreateReportModal extends Component {
                         <View style={styles.section}>
                             <Text style={styles.headerText}>Select a category to report</Text>
                             <View style={styles.pillContainer}>
-                                {quickReports.map((item, index) => {
+                                {quickIncidentCategories.map((item, index) => {
                                     return (
                                         <TouchableOpacity
                                             key={index}
@@ -98,7 +78,7 @@ export default class CreateReportModal extends Component {
                                     selectedValue={selectedCategoryOther}
                                     onValueChange={this.handleOtherCategoryPress}
                                 >
-                                    {otherReports.map((x, i) =>
+                                    {otherIncidentCategories.map((x, i) =>
                                         <Picker.Item key={i} label={x} value={x} />
                                     )}
                                 </Picker>

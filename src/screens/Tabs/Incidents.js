@@ -1,11 +1,35 @@
 import React, { Component } from 'react';
-import { Button, Text, View, Image } from 'react-native';
-import {
-    Container, Content, Item, Input, Form, Textarea, Picker
-} from 'native-base'
+import {  Text, View, FlatList } from 'react-native';
+import { Container } from 'native-base'
 import styles from '@assets/styles'
 import StationPicker from '@components/StationPicker';
+import Divider from '@components/Divider';
 import Branding from '@components/Branding';
+import IncidentCard from '@components/IncidentCard';
+
+const data = [
+    {
+        category: 'Panhandle/Homeless',
+        description: 'Individual located at the bottom of the northbound escalator.',
+        timestamp: new Date("2019-01-30"),
+        upvoteCount: 21,
+        status: 1,
+    },
+    {
+        category: 'Light Issue',
+        description: 'Ceiling light out on north end of the platform.',
+        timestamp: new Date("2020-02-18"),
+        upvoteCount: 46,
+        status: 0,
+    },
+    {
+        category: 'Sign Outage',
+        description: 'Upcoming train display board showing blue screen.',
+        timestamp: new Date("2020-03-28"),
+        upvoteCount: 39,
+        status: 2,
+    },
+];
 
 export default class Incidents extends Component {
     constructor(props) {
@@ -23,12 +47,32 @@ export default class Incidents extends Component {
         })
     }
 
-    render() {
-        const { navigation } = this.props;
+    renderItem({ item, index }) {
+        return (
+            <IncidentCard key={index} item={item} />
+        )
+    }
 
+    render() {
         return (
             <Container style={{ flex: 1 }}>
                 <StationPicker />
+                <FlatList
+                    data={data}
+                    showsVerticalScrollIndicator={false}
+                    keyExtractor={(item, index) => item.category + index}
+                    renderItem={this.renderItem.bind(this)}
+                    ItemSeparatorComponent={() => <Divider />}
+                    ListFooterComponent={(data.length > 0 && <Divider />)}
+                    ListEmptyComponent={ null
+                        // <View style={{ flex: 1, height: 220, paddingHorizontal: 60, alignItems: 'center', justifyContent: 'flex-end' }}>
+                        //     <Text style={styles.bigText}>No Tasks Posted</Text>
+                        //     <Text style={[styles.smText, { textAlign: 'center' }]}>To post a task, tap the plus button in the top right.</Text>
+                        // </View>
+                    }
+                    // refreshing={this.state.refreshing}
+                    // onRefresh={this.handleRefresh}
+                />
             </Container>
         )
     }

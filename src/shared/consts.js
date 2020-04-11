@@ -37,3 +37,30 @@ export const stations = [
     'West End',
     'West Lake',
 ];
+
+export const quickIncidentCategories = [
+    'Vandalism/Graffiti',
+    'Light Issue',
+    'Sign Outage',
+    'Train Delayed/Stopped',
+    'Nuisance Behavior',
+];
+
+export const otherIncidentCategories = [
+    'Assualt or fighting',
+    'Gun / knife / shooting',
+    'Human Trafficking',
+    'Medical emergency',
+    'Panhandle/Homeless',
+    'Person needs assistance',
+    'Sanitary issue',
+    'Suspicious Activity',
+    'Unattended bag or package',
+    'Other issue',
+];
+
+export const incidentStatus = {
+    0: '',
+    1: 'Seen by MARTA',
+    2: 'MARTA Resolving'
+};

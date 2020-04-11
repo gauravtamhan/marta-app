@@ -4,6 +4,12 @@ import { Item, Picker } from 'native-base'
 import { Ionicons } from '@expo/vector-icons';
 import { THEME_COLOR } from '@assets/colors';
 import { stations } from '@shared/consts';
+import styles from '@assets/styles'
+
+const textStyle = {
+    fontWeight: '600',
+    color: '#fff',
+}
 
 export default class Home extends Component {
     constructor(props) {
@@ -26,9 +32,9 @@ export default class Home extends Component {
                         mode="dropdown"
                         style={{ width: 410, paddingRight: 16, }}
                         headerBackButtonText={'Close'}
-                        textStyle={{ fontSize: 17, color: '#fff' }}
+                        textStyle={[styles.bodyText, textStyle]}
                         placeholder={'Choose a station'}
-                        placeholderStyle={{ fontSize: 17, color: '#fff', }}
+                        placeholderStyle={[styles.bodyText, textStyle]}
                         headerBackButtonTextStyle={{ color: THEME_COLOR }}
                         selectedValue={this.state.selectedStation}
                         onValueChange={(value) => this.setState({ selectedStation: value })}
