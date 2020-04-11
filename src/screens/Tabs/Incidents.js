@@ -25,7 +25,7 @@ const data = [
     {
         category: 'Sign Outage',
         description: 'Upcoming train display board showing blue screen.',
-        timestamp: new Date("2020-03-28"),
+        timestamp: new Date("2020-04-08"),
         upvoteCount: 39,
         status: 2,
     },
@@ -64,12 +64,17 @@ export default class Incidents extends Component {
                     renderItem={this.renderItem.bind(this)}
                     ItemSeparatorComponent={() => <Divider />}
                     ListFooterComponent={(data.length > 0 && <Divider />)}
-                    ListEmptyComponent={ null
-                        // <View style={{ flex: 1, height: 220, paddingHorizontal: 60, alignItems: 'center', justifyContent: 'flex-end' }}>
-                        //     <Text style={styles.bigText}>No Tasks Posted</Text>
-                        //     <Text style={[styles.smText, { textAlign: 'center' }]}>To post a task, tap the plus button in the top right.</Text>
-                        // </View>
-                    }
+                    ListEmptyComponent={(
+                        <View style={{ flex: 1, height: 220, paddingHorizontal: 60, alignItems: 'center', justifyContent: 'flex-end' }}>
+                            <Text style={styles.emptyListHeaderText}>
+                                No Incidents
+                            </Text>
+                            <Text
+                                style={styles.emptyListContentText}>
+                                To report an incident, tap the button in the top right corner.
+                            </Text>
+                        </View>
+                    )}
                     // refreshing={this.state.refreshing}
                     // onRefresh={this.handleRefresh}
                 />

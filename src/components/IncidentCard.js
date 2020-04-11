@@ -3,14 +3,14 @@ import { Text, View, Image } from 'react-native';
 import { Button } from 'native-base'
 import { Ionicons } from '@expo/vector-icons';
 import { incidentStatus } from '@shared/consts';
+import { calculateDateTime } from '@shared/helpers';
 import { THEME_COLOR } from '@assets/colors';
 import styles from '@assets/styles'
 
 const IncidentCard = ({ item }) => {
     const { category, description, timestamp, upvoteCount, status } = item;
 
-    const options = { weekday: 'long', month: 'long', day: 'numeric' };
-    const dateString = `Reported on ${timestamp.toLocaleDateString('en-US', options)}`
+    const dateString = `Reported ${calculateDateTime(timestamp)}`
 
     return (
         <View style={styles.contentPadding}>

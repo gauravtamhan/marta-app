@@ -70,6 +70,22 @@ var styles = StyleSheet.create({
         color: '#000',
         opacity: 0.38,
     },
+    emptyListHeaderText: {
+        fontSize: 24,
+        fontWeight: '700',
+        letterSpacing: 0.35,
+        lineHeight: 28,
+        opacity: .7,
+        color: '#17283D',
+    },
+    emptyListContentText: {
+        textAlign: 'center',
+        marginTop: 20,
+        fontSize: 16,
+        letterSpacing: 0.07,
+        opacity: .6,
+        color: '#17283D'
+    },
 
     /*=================================================
                 Button/Pill Styles
