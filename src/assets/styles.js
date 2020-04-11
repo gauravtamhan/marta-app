@@ -7,8 +7,8 @@ var styles = StyleSheet.create({
                 Headerbar Title Styles
     ==================================================*/
     brandImage: {
-        width: 142,
-        height: 21,
+        width: 135,
+        height: 20,
     }
 })
 
