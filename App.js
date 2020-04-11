@@ -19,6 +19,14 @@ function DetailsScreen() {
     );
 }
 
+const HeaderButton = ({ navigation, close, location, label }) => {
+    return (
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 8 }}>
+            <Button color={THEME_COLOR} onPress={() => { close ? navigation.goBack() : navigation.navigate(location) }} title={label} />
+        </View>
+    )
+}
+
 const screenOptions = {
     headerStyleInterpolator: HeaderStyleInterpolators.forUIKit,
 }
@@ -50,7 +58,7 @@ function SecondStackScreen() {
                 component={Incidents}
                 options={({ navigation }) => ({
                     screenOptions,
-                    headerRight: () => (<Button color={THEME_COLOR} onPress={() => { navigation.navigate('Add Incident') }} title="Add" />)
+                    headerRight: () => (<HeaderButton navigation={navigation} location="Add Incident" label="Add" />)
                 })}
             />
             <SecondStack.Screen name="Details" component={DetailsScreen} options={screenOptions} />
@@ -104,7 +112,7 @@ export default function App() {
                     component={CreateReportModal}
                     options={({ navigation }) => ({
                         gestureEnabled: false,
-                        headerLeft: () => (<Button color={THEME_COLOR} onPress={() => { navigation.goBack() }} title="Cancel" />)
+                        headerLeft: () => (<HeaderButton navigation={navigation} close label="Cancel" />)
                     })}
                 />
             </RootStack.Navigator>
