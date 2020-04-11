@@ -42,6 +42,7 @@ var styles = StyleSheet.create({
     pillText: {
         fontSize: 14,
         fontWeight: '500',
+        color: '#000',
     },
     pillTextActive: {
         color: '#fff'
@@ -64,15 +65,15 @@ var styles = StyleSheet.create({
         marginTop: 18,
         flexDirection: 'row',
         flexWrap: 'wrap',
-        marginLeft: -5,
+        marginLeft: -4,
     },
     pill: {
         backgroundColor: DISABLED_BTN_COLOR,
-        paddingHorizontal: 12,
-        paddingVertical: 8,
+        paddingHorizontal: 13,
+        paddingVertical: 11,
         borderRadius: 50,
         marginVertical: 5,
-        marginHorizontal: 5,
+        marginHorizontal: 4,
         alignSelf: 'flex-start',
     },
     pillActive: {
