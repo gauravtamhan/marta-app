@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Text, View, TouchableOpacity } from 'react-native';
 import {
     Container, Content, Textarea, Picker
@@ -9,8 +10,9 @@ import Divider from '@components/Divider';
 import Button from '@components/Button';
 import { THEME_COLOR } from '@assets/colors';
 import { quickIncidentCategories, otherIncidentCategories } from '@shared/consts';
+import { postIncident } from '@store/actions'
 
-export default class CreateReportModal extends Component {
+class CreateReportModal extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -35,13 +37,13 @@ export default class CreateReportModal extends Component {
     }
 
     handleSubmitPress = () => {
-        const { navigation } = this.props;
+        const { navigation, selectedStation, postIncident } = this.props;
         const { selectedCategory, selectedCategoryOther, description } = this.state;
 
         const category = selectedCategory || selectedCategoryOther;
 
-        console.log('category: ', category);
-        console.log('description: ', description);
+        postIncident(selectedStation, { category, description, })
+
         navigation.goBack();
     }
 
@@ -110,3 +112,19 @@ export default class CreateReportModal extends Component {
     }
 
 }
+
+const mapStateToProps = (state) => {
+    return {
+        selectedStation: state.reducer.selectedStation,
+    }
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        postIncident: (station, postContent) => {
+            dispatch(postIncident(station, postContent));
+        },
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateReportModal);

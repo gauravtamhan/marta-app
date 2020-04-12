@@ -1,8 +1,9 @@
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux'
 import logger from 'redux-logger';
+import thunk from 'redux-thunk'
 import reducer from './reducer';
 
-const middleWare = [];
+const middleWare = [thunk];
 
 if (process.env.NODE_ENV !== 'production') {
     middleWare.push(logger);
