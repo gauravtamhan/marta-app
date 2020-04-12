@@ -6,6 +6,6 @@ const c = {
 }
 
 export const THEME_COLOR = c.blue;
-
+export const DISABLED_BTN_COLOR = '#E4E4E5';
 export const BG_COLOR = '#fff';
 

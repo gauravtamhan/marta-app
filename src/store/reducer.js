@@ -3,7 +3,10 @@ import * as actions from './actions';
 const initialState = {
     selectedStation: 'Midtown',
     isPostingIncident: false,
-    incidentError: '',
+    postingIncidentError: '',
+    isFetchingIncidentList: false,
+    incidentList: [],
+    fetchingIncidentsError: '',
 };
 
 export default function auth(state = initialState, action) {
@@ -26,9 +29,28 @@ export default function auth(state = initialState, action) {
         case actions.POST_INCIDENT_FAIL:
             return {
                 ...state,
-                incidentError: action.error,
+                postingIncidentError: action.error,
                 isPostingIncident: false,
             };
+        case actions.FETCH_INCIDENT_LIST_START:
+            return {
+                ...state,
+                isFetchingIncidentList: true,
+            };
+        case actions.FETCH_INCIDENT_LIST_SUCCESS:
+            return {
+                ...state,
+                isFetchingIncidentList: false,
+                incidentList: action.payload,
+            };
+        case actions.FETCH_INCIDENT_LIST_FAIL:
+            return {
+                ...state,
+                isFetchingIncidentList: false,
+                fetchingIncidentsError: action.error,
+                incidentList: [],
+            };
+
         default:
             return state;
     }

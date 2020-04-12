@@ -1,37 +1,15 @@
 import React, { Component } from 'react';
-import {  Text, View, FlatList } from 'react-native';
+import { connect } from 'react-redux';
+import { Text, View, FlatList, ActivityIndicator } from 'react-native';
 import { Container } from 'native-base'
 import styles from '@assets/styles'
 import StationPicker from '@components/StationPicker';
 import Divider from '@components/Divider';
 import Branding from '@components/Branding';
 import IncidentCard from '@components/IncidentCard';
+import { fetchIncidentList } from '@store/actions'
 
-const data = [
-    {
-        category: 'Panhandle/Homeless',
-        description: 'Individual located at the bottom of the northbound escalator.',
-        timestamp: new Date("2019-01-30"),
-        upvoteCount: 21,
-        status: 1,
-    },
-    {
-        category: 'Light Issue',
-        description: 'Ceiling light out on north end of the platform.',
-        timestamp: new Date("2020-02-18"),
-        upvoteCount: 46,
-        status: 0,
-    },
-    {
-        category: 'Sign Outage',
-        description: 'Upcoming train display board showing blue screen.',
-        timestamp: new Date("2020-04-08"),
-        upvoteCount: 39,
-        status: 2,
-    },
-];
-
-export default class Incidents extends Component {
+class Incidents extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -40,11 +18,22 @@ export default class Incidents extends Component {
     }
 
     componentDidMount() {
-        const { navigation } = this.props;
+        const { navigation, fetchIncidentList, selectedStation } = this.props;
 
         navigation.setOptions({
             headerTitle: () => <Branding />
         })
+
+        fetchIncidentList(selectedStation);
+    }
+
+    componentDidUpdate(prevProps) {
+        const { selectedStation, fetchIncidentList } = this.props;
+
+        if (prevProps.selectedStation !== selectedStation) {
+            console.log('hit meee')
+            fetchIncidentList(selectedStation);
+        }
     }
 
     renderItem({ item, index }) {
@@ -54,32 +43,57 @@ export default class Incidents extends Component {
     }
 
     render() {
+        const { isFetchingIncidentList, incidentList } = this.props;
+
         return (
             <Container style={{ flex: 1 }}>
                 <StationPicker />
-                <FlatList
-                    data={data}
-                    showsVerticalScrollIndicator={false}
-                    keyExtractor={(item, index) => item.category + index}
-                    renderItem={this.renderItem.bind(this)}
-                    ItemSeparatorComponent={() => <Divider />}
-                    ListFooterComponent={(data.length > 0 && <Divider />)}
-                    ListEmptyComponent={(
-                        <View style={{ flex: 1, height: 220, paddingHorizontal: 60, alignItems: 'center', justifyContent: 'flex-end' }}>
-                            <Text style={styles.emptyListHeaderText}>
-                                No Incidents
-                            </Text>
-                            <Text
-                                style={styles.emptyListContentText}>
-                                To report an incident, tap the button in the top right corner.
-                            </Text>
-                        </View>
-                    )}
-                    // refreshing={this.state.refreshing}
-                    // onRefresh={this.handleRefresh}
-                />
+                {isFetchingIncidentList ? (
+                    <View style={styles.loaderContainer}>
+                        <ActivityIndicator size="large" />
+                    </View>
+                ) : (
+                    <FlatList
+                        data={incidentList}
+                        showsVerticalScrollIndicator={false}
+                        keyExtractor={(item, index) => item.category + index}
+                        renderItem={this.renderItem.bind(this)}
+                        ItemSeparatorComponent={() => <Divider />}
+                        ListFooterComponent={(incidentList.length > 0 && <Divider />)}
+                        ListEmptyComponent={(
+                            <View style={{ flex: 1, height: 220, paddingHorizontal: 60, alignItems: 'center', justifyContent: 'flex-end' }}>
+                                <Text style={styles.emptyListHeaderText}>
+                                    No Incidents
+                        </Text>
+                                <Text
+                                    style={styles.emptyListContentText}>
+                                    To report an incident, tap the button in the top right corner.
+                        </Text>
+                            </View>
+                        )}
+                        // refreshing={this.state.refreshing}
+                        // onRefresh={this.handleRefresh}
+                    />
+                )}
             </Container>
         )
     }
-
 }
+
+const mapStateToProps = (state) => {
+    return {
+        selectedStation: state.reducer.selectedStation,
+        incidentList: state.reducer.incidentList,
+        isFetchingIncidentList: state.reducer.isFetchingIncidentList,
+    }
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        fetchIncidentList: (station) => {
+            dispatch(fetchIncidentList(station));
+        },
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Incidents);

@@ -1,7 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { THEME_COLOR, BG_COLOR } from '@assets/colors';
-
-const DISABLED_BTN_COLOR = '#E4E4E5';
+import { THEME_COLOR, BG_COLOR, DISABLED_BTN_COLOR } from '@assets/colors';
 
 var styles = StyleSheet.create({
 
@@ -29,6 +27,11 @@ var styles = StyleSheet.create({
         height: 1,
         backgroundColor: '#979797',
         opacity: .36,
+    },
+    loaderContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
 
     /*=================================================
