@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { View } from 'react-native';
 import { Item, Picker } from 'native-base'
 import { Ionicons } from '@expo/vector-icons';
 import { THEME_COLOR } from '@assets/colors';
 import { stations } from '@shared/consts';
+import { setStationSelection } from '@store/actions'
 import styles from '@assets/styles'
 
 const textStyle = {
@@ -11,15 +13,20 @@ const textStyle = {
     color: '#fff',
 }
 
-export default class Home extends Component {
+class StationPicker extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            selectedStation: stations[28],
-        }
+    }
+
+    handleValueChange = (value) => {
+        const { setStationSelection } = this.props;
+
+        setStationSelection(value);
     }
 
     render() {
+        const { selectedStation } = this.props;
+
         return (
             <View style={{
                 backgroundColor: '#231F20',
@@ -36,8 +43,8 @@ export default class Home extends Component {
                         placeholder={'Choose a station'}
                         placeholderStyle={[styles.bodyText, textStyle]}
                         headerBackButtonTextStyle={{ color: THEME_COLOR }}
-                        selectedValue={this.state.selectedStation}
-                        onValueChange={(value) => this.setState({ selectedStation: value })}
+                        selectedValue={selectedStation}
+                        onValueChange={this.handleValueChange}
                     >
                         {stations.map((x, i) =>
                             <Picker.Item key={i} label={x} value={x} />
@@ -48,3 +55,19 @@ export default class Home extends Component {
         )
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        selectedStation: state.reducer.selectedStation,
+    }
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setStationSelection: (station) => {
+            dispatch(setStationSelection(station));
+        },
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(StationPicker);

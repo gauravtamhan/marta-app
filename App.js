@@ -1,4 +1,6 @@
 import React from 'react';
+import { Provider } from 'react-redux';
+import store from './src/store/create';
 import { Ionicons } from '@expo/vector-icons';
 import { Button, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
@@ -104,18 +106,20 @@ const RootStack = createStackNavigator();
 
 export default function App() {
     return (
-        <NavigationContainer>
-            <RootStack.Navigator mode="modal">
-                <RootStack.Screen name="MainTabs" component={MainTabs} options={{ headerShown: false }} />
-                <RootStack.Screen
-                    name="Add Incident"
-                    component={CreateReportModal}
-                    options={({ navigation }) => ({
-                        gestureEnabled: false,
-                        headerLeft: () => (<HeaderButton navigation={navigation} close label="Cancel" />)
-                    })}
-                />
-            </RootStack.Navigator>
-        </NavigationContainer>
+        <Provider store={store}>
+            <NavigationContainer>
+                <RootStack.Navigator mode="modal">
+                    <RootStack.Screen name="MainTabs" component={MainTabs} options={{ headerShown: false }} />
+                    <RootStack.Screen
+                        name="Add Incident"
+                        component={CreateReportModal}
+                        options={({ navigation }) => ({
+                            gestureEnabled: false,
+                            headerLeft: () => (<HeaderButton navigation={navigation} close label="Cancel" />)
+                        })}
+                    />
+                </RootStack.Navigator>
+            </NavigationContainer>
+        </Provider>
     );
 }
