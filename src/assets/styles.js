@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { THEME_COLOR, BG_COLOR, DISABLED_BTN_COLOR } from '@assets/colors';
+import { THEME_COLOR, INACTIVE_COLOR, DISABLED_BTN_COLOR } from '@assets/colors';
 
 var styles = StyleSheet.create({
 
@@ -47,8 +47,7 @@ var styles = StyleSheet.create({
         fontSize: 13,
         fontWeight: '500',
         letterSpacing: 0.07,
-        opacity: .6,
-        color: '#17283D'
+        color: INACTIVE_COLOR,
     },
     bodyText: {
         fontSize: 17,
@@ -78,16 +77,14 @@ var styles = StyleSheet.create({
         fontWeight: '700',
         letterSpacing: 0.35,
         lineHeight: 28,
-        opacity: .7,
-        color: '#17283D',
+        color: '#5A6675',
     },
     emptyListContentText: {
         textAlign: 'center',
         marginTop: 20,
         fontSize: 16,
         letterSpacing: 0.07,
-        opacity: .6,
-        color: '#17283D'
+        color: INACTIVE_COLOR,
     },
 
     /*=================================================

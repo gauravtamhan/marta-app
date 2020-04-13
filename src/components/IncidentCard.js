@@ -5,7 +5,7 @@ import { Button } from 'native-base'
 import { Ionicons } from '@expo/vector-icons';
 import { incidentStatus } from '@shared/consts';
 import { calculateDateTime } from '@shared/helpers';
-import { THEME_COLOR, DISABLED_BTN_COLOR } from '@assets/colors';
+import { THEME_COLOR } from '@assets/colors';
 import styles from '@assets/styles'
 import images from '@assets/images'
 import { updateUpvoteCount } from '@store/actions'
@@ -15,13 +15,13 @@ class IncidentCard extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            btnDisabled: false,
+            btnClicked: false,
         }
     }
 
     render() {
         const { item, selectedStation, updateUpvoteCount } = this.props;
-        const { btnDisabled } = this.state;
+        const { btnClicked } = this.state;
 
         const { category, description, timestamp, upvoteCount, status, key } = item;
         const dateString = `Reported ${calculateDateTime(timestamp)}`
@@ -44,16 +44,15 @@ class IncidentCard extends Component {
                     <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', paddingLeft: 8 }}>
                         <Button
                             icon
-                            disabled={btnDisabled}
                             transparent
                             onPress={() => {
                                 this.setState({
-                                    btnDisabled: true
+                                    btnClicked: !btnClicked
                                 }, () => {
-                                    updateUpvoteCount(selectedStation, key, upvoteCount + 1);
+                                    updateUpvoteCount(selectedStation, key, btnClicked ? upvoteCount - 1 : upvoteCount + 1);
                                 })
                             }}>
-                            <Ionicons name="ios-arrow-up" size={26} color={btnDisabled ? DISABLED_BTN_COLOR : THEME_COLOR} />
+                            <Ionicons name="ios-arrow-up" size={26} color={btnClicked ? THEME_COLOR : '#9EA5AD'} />
                         </Button>
                         <Text style={[styles.pillText, { marginLeft: 8, fontWeight: '600' }]}>{upvoteCount}</Text>
                     </View>
