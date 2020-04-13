@@ -7,6 +7,7 @@ import { incidentStatus } from '@shared/consts';
 import { calculateDateTime } from '@shared/helpers';
 import { THEME_COLOR, DISABLED_BTN_COLOR } from '@assets/colors';
 import styles from '@assets/styles'
+import images from '@assets/images'
 import { updateUpvoteCount } from '@store/actions'
 
 
@@ -29,7 +30,7 @@ class IncidentCard extends Component {
             <View style={styles.contentPadding}>
                 <View style={{ flexDirection: 'row', paddingTop: 15 }}>
                     <View style={{ flex: 1, }}>
-                        <View style={{ width: 55, height: 55, backgroundColor: '#E4E4E5', borderRadius: 50 }} />
+                        <Image style={{ width: 55, height: 55 }} source={images[category]} />
                     </View>
                     <View style={{ flex: 4 }}>
                         <Text style={styles.headerText}>{category}</Text>
