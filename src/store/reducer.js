@@ -7,6 +7,9 @@ const initialState = {
     isFetchingIncidentList: false,
     incidentList: [],
     fetchingIncidentsError: '',
+    isFetchingRailSchedule: false,
+    railSchedule: [],
+    fetchingRailScheduleError: '',
 };
 
 export default function auth(state = initialState, action) {
@@ -50,7 +53,23 @@ export default function auth(state = initialState, action) {
                 fetchingIncidentsError: action.error,
                 incidentList: [],
             };
-
+        case actions.FETCH_RAIL_SCHEDULE_START:
+            return {
+                ...state,
+                isFetchingRailSchedule: true,
+            };
+        case actions.FETCH_RAIL_SCHEDULE_SUCCESS:
+            return {
+                ...state,
+                isFetchingRailSchedule: false,
+                railSchedule: action.payload,
+            };
+        case actions.FETCH_RAIL_SCHEDULE_FAIL:
+            return {
+                ...state,
+                isFetchingRailSchedule: false,
+                fetchingRailScheduleError: action.error
+            };
         default:
             return state;
     }

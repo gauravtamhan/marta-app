@@ -52,7 +52,7 @@ class CreateReportModal extends Component {
 
         return (
             <Container style={{ flex: 1 }}>
-                <Content contentContainerStyle={[styles.contentPadding]}>
+                <Content contentContainerStyle={[styles.contentPadding, { flex: 1 }]}>
                     <View style={{ flex: 5 }}>
                         <View style={styles.section}>
                             <Text style={styles.headerText}>Select a category to report</Text>

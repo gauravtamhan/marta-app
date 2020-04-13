@@ -27,7 +27,7 @@ class IncidentCard extends Component {
         const dateString = `Reported ${calculateDateTime(timestamp)}`
 
         return (
-            <View style={styles.contentPadding}>
+            <View style={[styles.contentPadding, { flex: 1 }]}>
                 <View style={{ flexDirection: 'row', paddingTop: 15 }}>
                     <View style={{ flex: 1, }}>
                         <Image style={{ width: 55, height: 55 }} source={images[category]} />

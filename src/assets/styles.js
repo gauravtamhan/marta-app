@@ -16,7 +16,6 @@ var styles = StyleSheet.create({
     ==================================================*/
     contentPadding: {
         paddingHorizontal: 16,
-        flex: 1,
     },
     section: {
         paddingVertical: 36,

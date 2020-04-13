@@ -31,7 +31,6 @@ class Incidents extends Component {
         const { selectedStation, fetchIncidentList } = this.props;
 
         if (prevProps.selectedStation !== selectedStation) {
-            console.log('hit meee')
             fetchIncidentList(selectedStation);
         }
     }
