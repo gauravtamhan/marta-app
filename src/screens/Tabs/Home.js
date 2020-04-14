@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Image, TouchableOpacity } from 'react-native';
+import { Text, View, Image, ActivityIndicator } from 'react-native';
 import {
     Container, Content, Button, Input, Form, Textarea, Picker
 } from 'native-base'
@@ -12,6 +12,7 @@ import Divider from '@components/Divider';
 import ArrivalListItem from '@components/ArrivalListItem';
 import { connect } from 'react-redux';
 import { fetchRailSchedule } from '@store/actions'
+import { stations } from '@shared/consts';
 
 class Home extends Component {
     constructor(props) {
@@ -36,39 +37,57 @@ class Home extends Component {
 
         if ((prevProps.railSchedule !== railSchedule) || (prevProps.selectedStation !== selectedStation)) {
             this.setState({
-                currentRailSchedule: railSchedule.filter(item => (item['STATION']).includes(selectedStation.toUpperCase()))
+                currentRailSchedule: railSchedule.filter(item => {
+                    let station = stations.find(obj => obj.label === selectedStation);
+                    return item['STATION'] === station.value
+                })
             })
         }
     }
 
     render() {
-        const { navigation } = this.props;
+        const { navigation, isRefreshingRailSchedule, fetchRailSchedule, selectedStation } = this.props;
         const { currentRailSchedule } = this.state;
 
         return (
             <Container style={{ flex: 1 }}>
                 <StationPicker />
                 <Content contentContainerStyle={styles.contentPadding}>
-                    <View style={{ height: 180, backgroundColor: DISABLED_BTN_COLOR, marginHorizontal: -16 }}></View>
+                    <Image style={{ width: 500, height: 180, marginHorizontal: -16 }} resizeMode="center" source={require('@assets/images/midtown.jpg')} />
+                    <View style={{ height: 80, marginTop: -80 }}>
+                        <Text style={[styles.stationTitleText]}>{selectedStation}</Text>
+                    </View>
                     <View>
                         <View style={styles.section}>
-                            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+                            <View style={{ height: 45, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
                                 <Text style={styles.headerText}>Station Arrivals</Text>
-                                <Button icon transparent>
-                                    <Ionicons name="ios-refresh" size={24} color={THEME_COLOR} />
-                                </Button>
+                                {isRefreshingRailSchedule ? (
+                                    <ActivityIndicator />
+                                ) : (
+                                    <Button icon transparent onPress={() => fetchRailSchedule()}>
+                                        <Ionicons name="ios-refresh" size={24} color={THEME_COLOR} />
+                                    </Button>
+                                )}
+
                             </View>
                             <View style={{ marginTop: 16 }}>
                                 <Divider />
-                                {currentRailSchedule.map(({LINE, DIRECTION, DESTINATION, WAITING_TIME}, i) => (
-                                    <ArrivalListItem
-                                        key={i}
-                                        line={LINE}
-                                        direction={DIRECTION}
-                                        destination={DESTINATION}
-                                        waitingTime={WAITING_TIME}
-                                    />
-                                ))}
+                                {currentRailSchedule.length > 0 ? (
+                                    currentRailSchedule.map(({ LINE, DIRECTION, DESTINATION, WAITING_TIME }, i) => (
+                                        <ArrivalListItem
+                                            key={i}
+                                            line={LINE}
+                                            direction={DIRECTION}
+                                            destination={DESTINATION}
+                                            waitingTime={WAITING_TIME}
+                                        />
+                                    ))
+                                ) : (
+                                    <View style={{ height: 150, justifyContent: 'center', alignItems: 'center' }}>
+                                            <Text style={[styles.emptyListContentText, { fontStyle: 'italic' }]}>Currently, no train arrivals</Text>
+                                    </View>
+                                )}
+
                             </View>
                         </View>
                     </View>
@@ -82,6 +101,7 @@ const mapStateToProps = (state) => {
     return {
         selectedStation: state.reducer.selectedStation,
         isFetchingRailSchedule: state.reducer.isFetchingRailSchedule,
+        isRefreshingRailSchedule: state.reducer.isRefreshingRailSchedule,
         railSchedule: state.reducer.railSchedule,
     }
 };

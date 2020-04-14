@@ -8,6 +8,7 @@ const initialState = {
     incidentList: [],
     fetchingIncidentsError: '',
     isFetchingRailSchedule: false,
+    isRefreshingRailSchedule: false,
     railSchedule: [],
     fetchingRailScheduleError: '',
 };
@@ -54,20 +55,25 @@ export default function auth(state = initialState, action) {
                 incidentList: [],
             };
         case actions.FETCH_RAIL_SCHEDULE_START:
+            const { railSchedule } = state;
+
             return {
                 ...state,
-                isFetchingRailSchedule: true,
+                isFetchingRailSchedule: railSchedule.length === 0,
+                isRefreshingRailSchedule: railSchedule.length > 0,
             };
         case actions.FETCH_RAIL_SCHEDULE_SUCCESS:
             return {
                 ...state,
                 isFetchingRailSchedule: false,
+                isRefreshingRailSchedule: false,
                 railSchedule: action.payload,
             };
         case actions.FETCH_RAIL_SCHEDULE_FAIL:
             return {
                 ...state,
                 isFetchingRailSchedule: false,
+                isRefreshingRailSchedule: false,
                 fetchingRailScheduleError: action.error
             };
         default:

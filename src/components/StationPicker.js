@@ -5,7 +5,7 @@ import { Item, Picker } from 'native-base'
 import { Ionicons } from '@expo/vector-icons';
 import { THEME_COLOR } from '@assets/colors';
 import { stations } from '@shared/consts';
-import { setStationSelection } from '@store/actions'
+import { setStationSelection, fetchRailSchedule } from '@store/actions'
 import styles from '@assets/styles'
 
 const textStyle = {
@@ -19,9 +19,10 @@ class StationPicker extends Component {
     }
 
     handleValueChange = (value) => {
-        const { setStationSelection } = this.props;
+        const { setStationSelection, fetchRailSchedule } = this.props;
 
         setStationSelection(value);
+        fetchRailSchedule();
     }
 
     render() {
@@ -47,7 +48,7 @@ class StationPicker extends Component {
                         onValueChange={this.handleValueChange}
                     >
                         {stations.map((x, i) =>
-                            <Picker.Item key={i} label={x} value={x} />
+                            <Picker.Item key={i} label={x.label} value={x.label} />
                         )}
                     </Picker>
                 </Item>
@@ -66,6 +67,9 @@ const mapDispatchToProps = (dispatch) => {
     return {
         setStationSelection: (station) => {
             dispatch(setStationSelection(station));
+        },
+        fetchRailSchedule: () => {
+            dispatch(fetchRailSchedule());
         },
     };
 };
