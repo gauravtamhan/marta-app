@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Text, View, Image, ActivityIndicator } from 'react-native';
 import {
     Container, Content, Button, Input, Form, Textarea, Picker
@@ -13,6 +13,7 @@ import ArrivalListItem from '@components/ArrivalListItem';
 import { connect } from 'react-redux';
 import { fetchRailSchedule } from '@store/actions'
 import { stations } from '@shared/consts';
+import images from '@assets/hero'
 
 class Home extends Component {
     constructor(props) {
@@ -53,7 +54,7 @@ class Home extends Component {
             <Container style={{ flex: 1 }}>
                 <StationPicker />
                 <Content contentContainerStyle={styles.contentPadding}>
-                    <Image style={{ width: 500, height: 180, marginHorizontal: -16 }} resizeMode="center" source={require('@assets/images/midtown.jpg')} />
+                    <Image style={{ width: 500, height: 180, marginHorizontal: -16 }} resizeMode="center" source={images[selectedStation]} />
                     <View style={{ height: 80, marginTop: -80 }}>
                         <Text style={[styles.stationTitleText]}>{selectedStation}</Text>
                     </View>
@@ -83,9 +84,12 @@ class Home extends Component {
                                         />
                                     ))
                                 ) : (
-                                    <View style={{ height: 150, justifyContent: 'center', alignItems: 'center' }}>
-                                            <Text style={[styles.emptyListContentText, { fontStyle: 'italic' }]}>Currently, no train arrivals</Text>
-                                    </View>
+                                    <Fragment>
+                                        <View style={{ height: 150, justifyContent: 'center', alignItems: 'center' }}>
+                                                <Text style={[styles.emptyListContentText, { fontStyle: 'italic' }]}>Currently, no train arrivals</Text>
+                                        </View>
+                                        <Divider />
+                                    </Fragment>
                                 )}
 
                             </View>
