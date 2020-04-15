@@ -1,19 +1,18 @@
 import React, { Component, Fragment } from 'react';
-import { Text, View, Image, ActivityIndicator } from 'react-native';
-import {
-    Container, Content, Button, Input, Form, Textarea, Picker
-} from 'native-base'
+import { Text, View, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { Container, Content, Button } from 'native-base'
 import { Ionicons } from '@expo/vector-icons';
 import styles from '@assets/styles';
-import { THEME_COLOR, DISABLED_BTN_COLOR, INACTIVE_COLOR } from '@assets/colors';
+import { THEME_COLOR } from '@assets/colors';
 import StationPicker from '@components/StationPicker';
 import Branding from '@components/Branding';
 import Divider from '@components/Divider';
+import BarChart from '@components/BarChart';
 import ArrivalListItem from '@components/ArrivalListItem';
 import { connect } from 'react-redux';
 import { fetchRailSchedule } from '@store/actions'
 import { stations } from '@shared/consts';
-import images from '@assets/hero'
+import images from '@assets/hero';
 
 class Home extends Component {
     constructor(props) {
@@ -58,42 +57,43 @@ class Home extends Component {
                     <View style={{ height: 80, marginTop: -80 }}>
                         <Text style={[styles.stationTitleText]}>{selectedStation}</Text>
                     </View>
-                    <View>
-                        <View style={styles.section}>
-                            <View style={{ height: 45, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
-                                <Text style={styles.headerText}>Station Arrivals</Text>
-                                {isRefreshingRailSchedule ? (
-                                    <ActivityIndicator />
-                                ) : (
-                                    <Button icon transparent onPress={() => fetchRailSchedule()}>
-                                        <Ionicons name="ios-refresh" size={24} color={THEME_COLOR} />
-                                    </Button>
-                                )}
+                    <View style={styles.section}>
+                        <View style={{ height: 45, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+                            <Text style={styles.headerText}>Station Arrivals</Text>
+                            {isRefreshingRailSchedule ? (
+                                <ActivityIndicator />
+                            ) : (
+                                <Button icon transparent onPress={() => fetchRailSchedule()}>
+                                    <Ionicons name="ios-refresh" size={24} color={THEME_COLOR} />
+                                </Button>
+                            )}
 
-                            </View>
-                            <View style={{ marginTop: 16 }}>
-                                <Divider />
-                                {currentRailSchedule.length > 0 ? (
-                                    currentRailSchedule.map(({ LINE, DIRECTION, DESTINATION, WAITING_TIME }, i) => (
-                                        <ArrivalListItem
-                                            key={i}
-                                            line={LINE}
-                                            direction={DIRECTION}
-                                            destination={DESTINATION}
-                                            waitingTime={WAITING_TIME}
-                                        />
-                                    ))
-                                ) : (
-                                    <Fragment>
-                                        <View style={{ height: 150, justifyContent: 'center', alignItems: 'center' }}>
-                                                <Text style={[styles.emptyListContentText, { fontStyle: 'italic' }]}>Currently, no train arrivals</Text>
-                                        </View>
-                                        <Divider />
-                                    </Fragment>
-                                )}
-
-                            </View>
                         </View>
+                        <View style={{ marginTop: 16 }}>
+                            <Divider />
+                            {currentRailSchedule.length > 0 ? (
+                                currentRailSchedule.map(({ LINE, DIRECTION, DESTINATION, WAITING_TIME }, i) => (
+                                    <ArrivalListItem
+                                        key={i}
+                                        line={LINE}
+                                        direction={DIRECTION}
+                                        destination={DESTINATION}
+                                        waitingTime={WAITING_TIME}
+                                    />
+                                ))
+                            ) : (
+                                <Fragment>
+                                    <View style={{ height: 150, justifyContent: 'center', alignItems: 'center' }}>
+                                            <Text style={[styles.emptyListContentText, { fontStyle: 'italic' }]}>Currently, no train arrivals</Text>
+                                    </View>
+                                    <Divider />
+                                </Fragment>
+                            )}
+                        </View>
+                    </View>
+                    <View style={{ paddingTop: 20, paddingBottom: 72 }}>
+                        <Text style={styles.headerText}>Popular Times</Text>
+                        <BarChart />
                     </View>
                 </Content>
             </Container>

@@ -30,3 +30,7 @@ export const calculateDateTime = (givenDateTime) => {
         return dateTime.format("MMMM D, YYYY")
     }
 }
+
+export const getHour = () => {
+    return moment().hour();
+}
