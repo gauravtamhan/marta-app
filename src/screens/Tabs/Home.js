@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Text, View, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { Text, View, Image, ActivityIndicator } from 'react-native';
 import { Container, Content, Button } from 'native-base'
 import { Ionicons } from '@expo/vector-icons';
 import styles from '@assets/styles';
@@ -72,15 +72,19 @@ class Home extends Component {
                         <View style={{ marginTop: 16 }}>
                             <Divider />
                             {currentRailSchedule.length > 0 ? (
-                                currentRailSchedule.map(({ LINE, DIRECTION, DESTINATION, WAITING_TIME }, i) => (
-                                    <ArrivalListItem
-                                        key={i}
-                                        line={LINE}
-                                        direction={DIRECTION}
-                                        destination={DESTINATION}
-                                        waitingTime={WAITING_TIME}
-                                    />
-                                ))
+                                currentRailSchedule.map((item, i) => {
+                                    const { LINE, DIRECTION, DESTINATION, WAITING_TIME } = item;
+                                    return (
+                                        <ArrivalListItem
+                                            key={i}
+                                            line={LINE}
+                                            direction={DIRECTION}
+                                            destination={DESTINATION}
+                                            waitingTime={WAITING_TIME}
+                                            onPress={() => { navigation.navigate('TrainDetails', { item, selectedStation }) }}
+                                        />
+                                    )
+                                })
                             ) : (
                                 <Fragment>
                                     <View style={{ height: 150, justifyContent: 'center', alignItems: 'center' }}>

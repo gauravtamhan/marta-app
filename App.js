@@ -11,15 +11,8 @@ import CreateReportModal from './src/screens/Modals/CreateReportModal';
 import Home from './src/screens/Tabs/Home';
 import Incidents from './src/screens/Tabs/Incidents';
 import Emergency from './src/screens/Tabs/Emergency';
+import TrainDetails from './src/screens/Tabs/TrainDetails';
 import { THEME_COLOR } from '@assets/colors';
-
-function DetailsScreen() {
-    return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text>Details!</Text>
-        </View>
-    );
-}
 
 const HeaderButton = ({ navigation, close, location, label }) => {
     return (
@@ -45,7 +38,7 @@ function FirstStackScreen() {
     return (
         <FirstStack.Navigator>
             <FirstStack.Screen name="Home" component={Home} options={screenOptions} />
-            <FirstStack.Screen name="Details" options={screenOptions} component={DetailsScreen} />
+            <FirstStack.Screen name="TrainDetails" options={screenOptions} component={TrainDetails} />
         </FirstStack.Navigator>
     );
 }
@@ -63,7 +56,6 @@ function SecondStackScreen() {
                     headerRight: () => (<HeaderButton navigation={navigation} location="Add Incident" label="Add" />)
                 })}
             />
-            <SecondStack.Screen name="Details" component={DetailsScreen} options={screenOptions} />
         </SecondStack.Navigator>
     );
 }

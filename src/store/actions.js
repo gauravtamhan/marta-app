@@ -80,7 +80,6 @@ export const postIncident = (station, postContent) => dispatch => {
 export const fetchIncidentList = (station) => dispatch => {
     dispatch(fetchIncidentListStart());
     return database.ref().child(`${station}`).orderByChild('timestamp').on('value', (snapshot) => {
-        // console.log('Snapshot: ', snapshot) // this auto-fires to fetchIncidentListSuccess because a snapshot exists when the db changes
         if (snapshot.exists()) {
             let incidents = [];
             snapshot.forEach((x) => {

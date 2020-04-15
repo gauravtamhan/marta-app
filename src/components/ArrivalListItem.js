@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
 import Divider from '@components/Divider';
 import { Ionicons } from '@expo/vector-icons';
 import styles from '@assets/styles';
 
 
-const ArrivalListItem = ({ line, direction, destination, waitingTime }) => {
+const ArrivalListItem = ({ line, direction, destination, waitingTime, onPress }) => {
     const colors = {
         RED: '#D1232C',
         GOLD: '#D5A929',
@@ -23,18 +23,37 @@ const ArrivalListItem = ({ line, direction, destination, waitingTime }) => {
         alignItems: 'center',
     };
 
+    const rowStyle = { paddingVertical: 12, flexDirection: 'row', alignItems: 'center' };
+
+    const destinationText = destination || 'Destination not shown'
+
+    const Content = (
+        <Fragment>
+            <View style={badgeStyle}>
+                <Text style={[styles.bodyText, { color: '#fff', fontWeight: '500' }]}>{direction}</Text>
+            </View>
+            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 14 }}>
+                <Text style={destination ? styles.pillText : [styles.captionText, { fontStyle: 'italic' }]}>{destinationText}</Text>
+                <Text style={[styles.buttonBlockText, { color: '#000' }]}>{waitingTime}</Text>
+            </View>
+            {onPress && (
+                <Ionicons name="ios-arrow-forward" size={22} color="#B6BAC1" />
+            )}
+        </Fragment>
+    )
+
     return (
         <View>
-            <TouchableOpacity style={{ paddingVertical: 12, flexDirection: 'row', alignItems: 'center' }}>
-                <View style={badgeStyle}>
-                    <Text style={[styles.bodyText, { color: '#fff', fontWeight: '500' }]}>{direction}</Text>
+            {onPress ? (
+                <TouchableOpacity style={rowStyle} onPress={onPress}>
+                    {Content}
+                </TouchableOpacity>
+            ) : (
+                <View style={rowStyle}>
+                    {Content}
                 </View>
-                <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 14 }}>
-                    <Text style={styles.pillText}>{`To ${destination}`}</Text>
-                    <Text style={[styles.buttonBlockText, { color: '#000' }]}>{waitingTime}</Text>
-                </View>
-                <Ionicons name="ios-arrow-forward" size={22} color="#B6BAC1" />
-            </TouchableOpacity>
+            )}
+
             <Divider />
         </View>
     )
