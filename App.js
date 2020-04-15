@@ -10,7 +10,7 @@ import { HeaderStyleInterpolators } from '@react-navigation/stack';
 import CreateReportModal from './src/screens/Modals/CreateReportModal';
 import Home from './src/screens/Tabs/Home';
 import Incidents from './src/screens/Tabs/Incidents';
-import Plan from './src/screens/Tabs/Plan';
+import Emergency from './src/screens/Tabs/Emergency';
 import { THEME_COLOR } from '@assets/colors';
 
 function DetailsScreen() {
@@ -36,7 +36,7 @@ const screenOptions = {
 const iconMapping = {
     'Home': 'ios-home',
     'Incidents': 'ios-warning',
-    'Plan': 'ios-navigate',
+    'Emergency': 'ios-help-buoy',
 };
 
 const FirstStack = createStackNavigator();
@@ -73,7 +73,7 @@ const ThirdStack = createStackNavigator();
 function ThirdStackScreen() {
     return (
         <ThirdStack.Navigator>
-            <ThirdStack.Screen name="Plan" component={Plan} options={screenOptions} />
+            <ThirdStack.Screen name="Emergency" component={Emergency} options={screenOptions} />
         </ThirdStack.Navigator>
     );
 }
@@ -97,7 +97,7 @@ function MainTabs() {
         >
             <Tab.Screen name="Home" component={FirstStackScreen} />
             <Tab.Screen name="Incidents" component={SecondStackScreen} />
-            <Tab.Screen name="Plan" component={ThirdStackScreen} />
+            <Tab.Screen name="Emergency" component={ThirdStackScreen} />
         </Tab.Navigator>
     )
 }
