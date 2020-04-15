@@ -38,7 +38,16 @@ function FirstStackScreen() {
     return (
         <FirstStack.Navigator>
             <FirstStack.Screen name="Home" component={Home} options={screenOptions} />
-            <FirstStack.Screen name="TrainDetails" options={screenOptions} component={TrainDetails} />
+            <FirstStack.Screen
+                name="TrainDetails"
+                options={{
+                    ...screenOptions,
+                    headerBackTitle: 'Back',
+                    headerTintColor: THEME_COLOR,
+                    headerTitleStyle: { color: '#000'},
+                }}
+                component={TrainDetails}
+            />
         </FirstStack.Navigator>
     );
 }
