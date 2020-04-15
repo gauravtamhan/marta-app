@@ -5,7 +5,7 @@ import reducer from './reducer';
 
 const middleWare = [thunk];
 
-if (process.env.NODE_ENV !== 'production') {
+if (__DEV__) {
     middleWare.push(logger);
 }
 
